@@ -252,7 +252,7 @@ var CLI = function () {
       }
 
       loader.start();
-      loader.setSpinnerTitle("Requesting signed loan attestation from Dharma Labs Inc.");
+      loader.setSpinnerTitle("Requesting signed loan attestation...");
 
       // Request signed loan request from the Risk Assessment Attestor (i.e. Dharma)
       try {
@@ -280,19 +280,19 @@ var CLI = function () {
         }
       }
 
-      console.log("\nBeginning the loan request process.  Hold tight -- this should take approximately 5 minutes\n");
+      // console.log("\nBeginning the loan request process.  Hold tight -- this should take approximately 5 minutes\n")
 
       loader.setSpinnerTitle("Deploying loan request for " + response.amount + ' ether.');
 
       var onAuctionStart = function onAuctionStart(err, result) {
-        loader.setSpinnerTitle("Loan request deployed. Investors are bidding on your request.");
+        loader.setSpinnerTitle("Investors are bidding on your request.");
       };
 
       var onReviewStart = this.loanReviewFlow(loan, loader);
 
       try {
         await this.borrower.broadcastLoanRequest(loan, onAuctionStart, onReviewStart);
-        loader.setSpinnerTitle("Loan request broadcasted.  Waiting for transaction to be mined...");
+        loader.setSpinnerTitle("Waiting for transaction to be mined...");
       } catch (err) {
         loader.stop(true);
         console.log(err);
@@ -323,8 +323,8 @@ var CLI = function () {
           loan.interestRate = bestBidSet.interestRate;
           var decorator = new _LoanDecorator2.default(loan);
 
-          console.log("Your loan request of " + decorator.principal() + " ether has been" + " approved at a " + decorator.interestRate() + " simple interest rate.");
-          console.log("Your last and only repayment date will be in 7 days, and you" + " will owe " + decorator.totalOwed());
+          console.log("\nYour loan request of " + decorator.principal() + " ether has been" + " approved at a " + decorator.interestRate() + " simple interest rate.\n");
+          console.log("\nYour last and only repayment date will be in 7 days, and you" + " will owe " + decorator.totalOwed());
           var answer = await _inquirer2.default.prompt([_prompts.BorrowFlow.reviewLoanTerms]);
 
           if (answer.choice === 'Accept') {

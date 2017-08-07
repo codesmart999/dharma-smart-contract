@@ -309,7 +309,7 @@ var Investor = function () {
       if (!refundWithdrawn) {
         this.store.dispatch((0, _actions.log)('info', 'Withdrawing refunded bid amount.'));
         try {
-          await loan.withdrawInvestment({ from: bid.bidder });
+          await bid.loan.withdrawInvestment({ from: bid.bidder });
         } catch (err) {
           this.store.dispatch((0, _actions.log)('error', err.toString()));
         }

@@ -14,10 +14,6 @@ var _config = require('../config.js');
 
 var _config2 = _interopRequireDefault(_config);
 
-var _requestPromise = require('request-promise');
-
-var _requestPromise2 = _interopRequireDefault(_requestPromise);
-
 var _LoanSchema = require('./schemas/LoanSchema.js');
 
 var _LoanSchema2 = _interopRequireDefault(_LoanSchema);
@@ -690,7 +686,7 @@ var Loan = function (_RedeemableERC) {
                 // TODO: Fix issue around truffle-contract bugs when using call methods
                 //    w/ non-default block numbers
                 // const state = await this.getState(true);
-                // 
+                //
                 // if (!state.equals(Constants.REJECTED_STATE) &&
                 //       !state.equals(Constants.ACCEPTED_STATE)) {
                 //   throw new Error('Bids can only be withdrawn once the loan has been ' +

@@ -8,9 +8,9 @@ var _Authenticate2 = _interopRequireDefault(_Authenticate);
 
 var _Errors = require('./Errors');
 
-var _requestPromise = require('request-promise');
+var _request = require('request');
 
-var _requestPromise2 = _interopRequireDefault(_requestPromise);
+var _request2 = _interopRequireDefault(_request);
 
 var _lodash = require('lodash');
 
@@ -61,7 +61,7 @@ var Borrower = function () {
 
       var response = void 0;
       try {
-        response = await (0, _requestPromise2.default)(params);
+        response = await (0, _request2.default)(params);
       } catch (err) {
         if (err.name === 'StatusCodeError') {
           switch (err.response.body.error) {
@@ -100,7 +100,7 @@ var Borrower = function () {
 
       var response = void 0;
       try {
-        response = await (0, _requestPromise2.default)(params);
+        response = await (0, _request2.default)(params);
       } catch (err) {
         if (err.name === 'StatusCodeError') {
           switch (err.response.body.error) {
@@ -140,7 +140,7 @@ var Borrower = function () {
         address: address
       });
 
-      var response = await (0, _requestPromise2.default)(params);
+      var response = await (0, _request2.default)(params);
 
       if ('error' in response) {
         switch (response.error) {
