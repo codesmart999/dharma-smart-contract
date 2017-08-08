@@ -21,7 +21,10 @@
 
 See [installation instructions](#installation) below to give it a try, and check out the Dharma Protocol [White Paper](https://dharma.io/whitepaper) for more extensive information on the specifics of the protocol.  
 
-The Dharma CLI runs on a private Ethereum Testnet spun up specifically for demonstration purposes.  However, _nothing_ about the protocol or implementation requires usage of permissioned or private chains, and we intend on moving the implementation to a public chain in the near future.  
+~~The Dharma CLI runs on a private Ethereum Testnet spun up specifically for demonstration purposes.  However, _nothing_ about the protocol or implementation requires usage of permissioned or private chains, and we intend on moving the implementation to a public chain in the near future.~~
+
+The Dharma CLI is live on Kovan Testnet as of release 0.0.25!  Older versions of the CLI utilized a private Ethereum Testnet spun up specifically 
+for demonstration purposes -- for any troubleshooting with the deprecated CLI, please email support@dharma.io.
 
 This is highly experimental, alpha-stage **\~mAd\~SciEncE\~**, so any and all bug reports, uncompromising feedback, and issue reports are welcome.  
 

@@ -1,20 +1,31 @@
 'use strict';
 
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = require('babel-runtime/helpers/inherits');
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
 var _Schema2 = require('./Schema.js');
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var TermsSchema = function (_Schema) {
-  _inherits(TermsSchema, _Schema);
+  (0, _inherits3.default)(TermsSchema, _Schema);
 
   function TermsSchema() {
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-    _classCallCheck(this, TermsSchema);
+    (0, _classCallCheck3.default)(this, TermsSchema);
 
     var schema = {
       version: new _Schema2.NumberType(),
@@ -23,7 +34,7 @@ var TermsSchema = function (_Schema) {
       termLength: new _Schema2.NumberType(),
       compounded: new _Schema2.BooleanType()
     };
-    return _possibleConstructorReturn(this, (TermsSchema.__proto__ || Object.getPrototypeOf(TermsSchema)).call(this, 'Terms', schema, options));
+    return (0, _possibleConstructorReturn3.default)(this, (TermsSchema.__proto__ || (0, _getPrototypeOf2.default)(TermsSchema)).call(this, 'Terms', schema, options));
   }
 
   return TermsSchema;

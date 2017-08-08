@@ -1,6 +1,20 @@
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _regenerator = require('babel-runtime/regenerator');
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _Constants = require('./Constants.js');
 
@@ -10,25 +24,21 @@ var _Util2 = _interopRequireDefault(_Util);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 var StateListeners = function () {
   function StateListeners(web3, loan) {
-    _classCallCheck(this, StateListeners);
+    (0, _classCallCheck3.default)(this, StateListeners);
 
     this.web3 = web3;
     this.loan = loan;
     this.listeners = {};
   }
 
-  _createClass(StateListeners, [{
+  (0, _createClass3.default)(StateListeners, [{
     key: 'refresh',
     value: function () {
-      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
+      var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
         var state;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
+        return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
@@ -85,8 +95,8 @@ var StateListeners = function () {
   }, {
     key: 'setupNullStateListeners',
     value: function () {
-      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2() {
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2() {
+        return _regenerator2.default.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
@@ -115,8 +125,8 @@ var StateListeners = function () {
   }, {
     key: 'setupAuctionStateListeners',
     value: function () {
-      var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3() {
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      var _ref3 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3() {
+        return _regenerator2.default.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
@@ -145,8 +155,8 @@ var StateListeners = function () {
   }, {
     key: 'setupReviewStateListeners',
     value: function () {
-      var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4() {
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      var _ref4 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee4() {
+        return _regenerator2.default.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
@@ -196,8 +206,8 @@ var StateListeners = function () {
       var _this = this;
 
       return function () {
-        var _ref5 = _asyncToGenerator(regeneratorRuntime.mark(function _callee5(err, logs) {
-          return regeneratorRuntime.wrap(function _callee5$(_context5) {
+        var _ref5 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee5(err, logs) {
+          return _regenerator2.default.wrap(function _callee5$(_context5) {
             while (1) {
               switch (_context5.prev = _context5.next) {
                 case 0:
@@ -229,8 +239,8 @@ var StateListeners = function () {
       var _this = this;
 
       return function () {
-        var _ref6 = _asyncToGenerator(regeneratorRuntime.mark(function _callee6(err, logs) {
-          return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        var _ref6 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee6(err, logs) {
+          return _regenerator2.default.wrap(function _callee6$(_context6) {
             while (1) {
               switch (_context6.prev = _context6.next) {
                 case 0:
@@ -262,8 +272,8 @@ var StateListeners = function () {
       var _this = this;
 
       return function () {
-        var _ref7 = _asyncToGenerator(regeneratorRuntime.mark(function _callee7(err, logs) {
-          return regeneratorRuntime.wrap(function _callee7$(_context7) {
+        var _ref7 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee7(err, logs) {
+          return _regenerator2.default.wrap(function _callee7$(_context7) {
             while (1) {
               switch (_context7.prev = _context7.next) {
                 case 0:
@@ -304,9 +314,9 @@ var StateListeners = function () {
       var _this = this;
 
       return function () {
-        var _ref8 = _asyncToGenerator(regeneratorRuntime.mark(function _callee8(err, logs) {
+        var _ref8 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee8(err, logs) {
           var termBeginBlock;
-          return regeneratorRuntime.wrap(function _callee8$(_context8) {
+          return _regenerator2.default.wrap(function _callee8$(_context8) {
             while (1) {
               switch (_context8.prev = _context8.next) {
                 case 0:
@@ -361,8 +371,8 @@ var StateListeners = function () {
       var _this = this;
 
       return function () {
-        var _ref9 = _asyncToGenerator(regeneratorRuntime.mark(function _callee9(err, logs) {
-          return regeneratorRuntime.wrap(function _callee9$(_context9) {
+        var _ref9 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee9(err, logs) {
+          return _regenerator2.default.wrap(function _callee9$(_context9) {
             while (1) {
               switch (_context9.prev = _context9.next) {
                 case 0:
@@ -394,7 +404,6 @@ var StateListeners = function () {
       }();
     }
   }]);
-
   return StateListeners;
 }();
 

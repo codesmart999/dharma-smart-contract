@@ -111,7 +111,6 @@ var CLI = function () {
     this.dharma = dharma;
     this.web3 = dharma.web3;
     this.wallet = wallet;
-    this.borrower = new _Borrower2.default(dharma);
   }
 
   _createClass(CLI, [{
@@ -120,7 +119,7 @@ var CLI = function () {
       var address = this.wallet.getAddress();
       var balance = await _Util2.default.getBalance(this.web3, address);
 
-      console.log('Dharma Testnet Balance: \u039E' + balance);
+      console.log('Testnet Balance: \u039E' + balance);
 
       var menu = await _inquirer2.default.prompt([_prompts.WalletFlow.mainMenu]);
       var loader = void 0;
@@ -217,8 +216,23 @@ var CLI = function () {
     value: async function borrowFlow(amount, unit) {
       var address = this.wallet.getAddress();
 
+      var authenticate = new _Authenticate2.default();
+      var authToken = void 0;
+
+      try {
+        authToken = await authenticate.getAuthToken();
+      } catch (err) {
+        var answer = await _inquirer2.default.prompt([_prompts.AuthenticateFlow.start]);
+        if (answer.confirmStart) {
+          await (0, _opn2.default)('https://authenticate.dharma.io', { wait: false });
+        }
+        process.exit(0);
+      }
+
+      var borrower = new _Borrower2.default(this.web3, authToken);
+
       var loan = void 0;
-      var attestation = void 0;
+      var limit = void 0;
       var stipendReceiptHash = void 0;
 
       var loader = new _cliSpinner.Spinner('Requesting attestation from Dharma Labs Inc.');
@@ -227,60 +241,43 @@ var CLI = function () {
 
       // Request attestation from the Risk Assessment Attestor (i.e. Dharma)
       try {
-        attestation = await this.borrower.requestAttestation(address, amount);
+        limit = await borrower.fetchLimit();
       } catch (err) {
         loader.stop(true);
-        if (err.type === 'AuthenticationError') {
-          var answer = await _inquirer2.default.prompt([_prompts.AuthenticateFlow.start]);
-          if (answer.confirmStart) {
-            await (0, _opn2.default)('https://authenticate.dharma.io', { wait: false });
-          }
-        } else if (err.type === 'RejectionError') {
+        if (err.message.includes('loan request has been rejected.')) {
           console.error('Sorry -- your loan request has been denied.  Please try' + " again later.");
-          process.exit(1);
+        } else {
+          console.error(err.message);
         }
+        process.exit(1);
       }
 
       loader.stop(true);
 
-      console.log("You've been approved for a loan of up to " + attestation.limit + " ether.");
+      console.log("You've been approved for a loan of up to " + limit + " ether.");
 
       var response = await _inquirer2.default.prompt([_prompts.BorrowFlow.chooseAmount]);
-      if (response.amount > attestation.limit) {
-        console.error('Sorry -- you may only request up to ' + attestation.limit + ' ether.');
+      if (response.amount > limit) {
+        console.error('Sorry -- you may only request up to ' + limit + ' ether.');
         process.exit(1);
       }
 
       loader.start();
       loader.setSpinnerTitle("Requesting signed loan attestation...");
 
-      // Request signed loan request from the Risk Assessment Attestor (i.e. Dharma)
-      try {
-        loan = await this.borrower.requestSignedLoan(address, response.amount);
-      } catch (err) {
-        loader.stop(true);
-        if (err.type === 'RejectionError') {
-          console.error('Sorry -- your loan request has been denied.  Please try' + " again later.");
-        } else {
-          console.log(err);
-        }
-        process.exit(1);
-      }
-
-      // If borrower's balance is too low to deploy loan request, request deployment
-      // stipend from RAA.
-      var hasMinBalance = await this.borrower.hasMinBalanceRequired(address);
-      if (!hasMinBalance) {
-        loader.setSpinnerTitle("Requesting deployment stipend from Dharma Labs Inc.");
-        try {
-          var txHash = await this.borrower.requestDeploymentStipend(address);
-          var tx = await _Util2.default.transactionMined(this.web3, txHash);
-        } catch (err) {
-          console.error(err.stack);
-        }
-      }
-
-      // console.log("\nBeginning the loan request process.  Hold tight -- this should take approximately 5 minutes\n")
+      // // Request signed loan request from the Risk Assessment Attestor (i.e. Dharma)
+      // try {
+      //   loan = await borrower.requestSignedLoan(address, response.amount);
+      // } catch (err) {
+      //   loader.stop(true);
+      //   if (err.type === 'RejectionError') {
+      //     console.error('Sorry -- your loan request has been denied.  Please try' +
+      //       " again later.");
+      //   } else {
+      //     console.log(err);
+      //   }
+      //   process.exit(1);
+      // }
 
       loader.setSpinnerTitle("Deploying loan request for " + response.amount + ' ether.');
 
@@ -288,10 +285,10 @@ var CLI = function () {
         loader.setSpinnerTitle("Investors are bidding on your request.");
       };
 
-      var onReviewStart = this.loanReviewFlow(loan, loader);
+      var onReviewStart = this.loanReviewFlow(loader, borrower);
 
       try {
-        await this.borrower.broadcastLoanRequest(loan, onAuctionStart, onReviewStart);
+        await borrower.broadcastLoanRequest(address, response.amount, onAuctionStart, onReviewStart);
         loader.setSpinnerTitle("Waiting for transaction to be mined...");
       } catch (err) {
         loader.stop(true);
@@ -301,10 +298,8 @@ var CLI = function () {
     }
   }, {
     key: 'loanReviewFlow',
-    value: function loanReviewFlow(loan, loader) {
-      var _this = this;
-
-      return async function (err, bestBidSet) {
+    value: function loanReviewFlow(loader, borrower) {
+      return async function (err, result) {
         loader.stop(true);
 
         if (err) {
@@ -319,8 +314,10 @@ var CLI = function () {
 
           process.exit();
         } else {
+          var bids = result.bids,
+              loan = result.loan;
 
-          loan.interestRate = bestBidSet.interestRate;
+          loan.interestRate = bids.interestRate;
           var decorator = new _LoanDecorator2.default(loan);
 
           console.log("\nYour loan request of " + decorator.principal() + " ether has been" + " approved at a " + decorator.interestRate() + " simple interest rate.\n");
@@ -331,7 +328,7 @@ var CLI = function () {
             loader.setSpinnerTitle("Broadcasting terms acceptance...");
             loader.start();
 
-            await _this.borrower.acceptLoanTerms(loan, bestBidSet.bids);
+            await borrower.acceptLoanTerms(loan, bids.bids);
             loader.stop(true);
 
             console.log("Your loan has been funded and " + decorator.principal() + " ether has been transferred to " + "address " + loan.borrower);
