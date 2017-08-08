@@ -1176,17 +1176,17 @@ detect-indent@^4.0.0:
   dependencies:
     repeating "^2.0.0"
 
-dharma-client@^0.0.17:
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/dharma-client/-/dharma-client-0.0.17.tgz#92f81ba709034bae5b46d13b564f4132dfecd459"
+dharma-client@^0.0.18:
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/dharma-client/-/dharma-client-0.0.18.tgz#9f4d2c6c0f438b88f93122d58add4e5adba28f29"
   dependencies:
     axios "^0.16.2"
     babel-runtime "^6.25.0"
     bignumber.js "^4.0.2"
-    dharma-js "^0.1.45"
+    dharma-js "^0.1.46"
     lodash "^4.17.4"
 
-dharma-js@^0.1.40, dharma-js@^0.1.45:
+dharma-js@^0.1.40, dharma-js@^0.1.46:
   version "0.1.46"
   resolved "https://registry.yarnpkg.com/dharma-js/-/dharma-js-0.1.46.tgz#b31b0139a8ce3540c7fcf8c634dacd2ce302d0be"
   dependencies:
