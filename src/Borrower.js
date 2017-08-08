@@ -44,8 +44,7 @@ var Borrower = function () {
   function Borrower(web3, authToken) {
     _classCallCheck(this, Borrower);
 
-    var env = 'production';
-    // const env = process.env.ENV || 'production';
+    var env = process.env.ENV || 'production';
 
     this.dharmaClient = new _dharmaClient2.default(web3, authToken, env);
   }

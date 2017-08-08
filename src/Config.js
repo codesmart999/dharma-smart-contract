@@ -9,7 +9,7 @@ var CONFIG = {
   },
 
   production: {
-    WEB3_RPC_PROVIDER: 'http://kovan.dharma.io',
+    WEB3_RPC_PROVIDER: 'http://kovan.dharma.io:8545',
     RAA_API_ROOT: 'https://risk.dharma.io/api'
   }
 };
