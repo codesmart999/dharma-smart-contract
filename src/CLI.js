@@ -64,6 +64,8 @@ var _cliSpinner = require('cli-spinner');
 
 var _Errors = require('./Errors');
 
+var _Constants = require('./Constants');
+
 var _opn = require('opn');
 
 var _opn2 = _interopRequireDefault(_opn);
@@ -213,7 +215,7 @@ var CLI = function () {
     }
   }, {
     key: 'borrowFlow',
-    value: async function borrowFlow(amount, unit) {
+    value: async function borrowFlow(amount, unit, network) {
       var address = this.wallet.getAddress();
 
       var authenticate = new _Authenticate2.default();
@@ -380,7 +382,7 @@ var CLI = function () {
   }, {
     key: 'entry',
     value: async function entry(argv) {
-      var cli = (0, _meow2.default)('\n      Usage\n        $ dharma <command>\n\n      Commands:\n        borrow        Request a loan on the Dharma network.\n        invest        Start a daemon that auto-invests in loans on the Dharma Network\n                      according to programmable parameters.\n        wallet        Send ether, view your balance, and make loan repayments.\n        authenticate  Update local authentication token\n        init          Create a decision engine file.\n        faucet        Get some ether from the Dharma Testnet Faucet\n    ');
+      var cli = (0, _meow2.default)('\n      Usage\n        $ dharma <command>\n\n      Commands:\n        borrow          Request a loan on the Dharma network.\n        invest          Start a daemon that auto-invests in loans on the Dharma Network\n                        according to programmable parameters.\n        wallet          Send ether, view your balance, and make loan repayments.\n        authenticate    Update local authentication token\n        init            Create a decision engine file.\n        faucet          Get some ether from the Dharma Testnet Faucet\n\n      Options:\n        --ropsten, -r   Use Ropsten testnet\n        --kovan, -k     Use Kovan testnet (default)\n    ');
 
       if (cli.input.length == 0) cli.showHelp();
 
@@ -426,8 +428,8 @@ var CLI = function () {
     }
   }, {
     key: 'faucet',
-    value: async function faucet(args) {
-      var cli = await CLI.init();
+    value: async function faucet(args, networkId) {
+      var cli = await CLI.init(networkId);
       var faucet = new _Faucet2.default(cli.dharma);
 
       var response = await _inquirer2.default.prompt([_prompts.FaucetFlow.howMuch]);
@@ -475,34 +477,34 @@ var CLI = function () {
   }, {
     key: 'borrow',
     value: async function borrow(args) {
-      var optionDefinitions = [{ name: 'unit', alias: 'u', defaultValue: 'ether', type: String }, { name: 'amount', alias: 'a', defaultOption: true, type: Number }];
+      var optionDefinitions = [{ name: 'unit', alias: 'u', defaultValue: 'ether', type: String }, { name: 'amount', alias: 'a', defaultOption: true, type: Number }, { name: 'network', alias: 'n', defaultValue: 'kovan', type: String }];
 
       var params = (0, _commandLineArgs2.default)(optionDefinitions, {
         argv: args
       });
 
-      var cli = await CLI.init();
+      var cli = await CLI.init(params.network);
       await cli.borrowFlow(params.amount, params.unit);
     }
   }, {
     key: 'invest',
-    value: async function invest() {
+    value: async function invest(networkId) {
       var args = (0, _meow2.default)('\n      Usage\n        $ dharma invest <enginePath>\n\n      Parameters:\n        enginePath    Path to the decision engine the Dharma CLI will use to\n                      make investment decisions.  Run \'dharma init\' in order\n                      to generate an example decision engine.\n    ');
 
       if (args.input.length < 2) args.showHelp();
 
-      var cli = await CLI.init();
+      var cli = await CLI.init(networkId);
       await cli.investFlow(args.input[1]);
     }
   }, {
     key: 'wallet',
-    value: async function wallet(args) {
-      var cli = await CLI.init();
+    value: async function wallet(networkId) {
+      var cli = await CLI.init(networkId);
       await cli.walletFlow();
     }
   }, {
     key: 'init',
-    value: async function init(walletStoreFile) {
+    value: async function init(walletStoreFile, network) {
       var walletExists = await _Wallet2.default.walletExists(walletStoreFile);
       var wallet = void 0;
       if (walletExists) {
@@ -515,7 +517,7 @@ var CLI = function () {
       var web3 = new _web2.default(engine);
 
       engine.addProvider(wallet.getSubprovider());
-      engine.addProvider(new _web4.default(new _web2.default.providers.HttpProvider(_Config2.default.WEB3_RPC_PROVIDER)));
+      engine.addProvider(new _web4.default(new _web2.default.providers.HttpProvider(_Config2.default.WEB3_RPC_PROVIDER[network])));
       engine.start();
 
       var dharma = new _dharmaJs2.default(web3);

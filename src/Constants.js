@@ -11,5 +11,9 @@ module.exports = {
     REPAID: 'REPAID',
     DELINQUENT: 'DELINQUENT',
     DEFAULT: 'DEFAULT'
+  },
+  NETWORK_ID: {
+    KOVAN: 42,
+    ROPSTEN: 3
   }
 };
