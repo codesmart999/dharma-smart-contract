@@ -8,6 +8,8 @@ var _bignumber2 = _interopRequireDefault(_bignumber);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var decimals = new _bignumber2.default(10 ** 18);
@@ -55,11 +57,35 @@ var LoanDecorator = function () {
     }
   }, {
     key: "currentBalanceOwed",
-    value: async function currentBalanceOwed() {
-      var currentlyOwed = await this.loan.servicing.currentBalanceOwed();
-      var currentlyOwedEther = currentlyOwed.div(decimals).toFixed(2);
-      return "\u039E" + currentlyOwedEther.toString();
-    }
+    value: function () {
+      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
+        var currentlyOwed, currentlyOwedEther;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.loan.servicing.currentBalanceOwed();
+
+              case 2:
+                currentlyOwed = _context.sent;
+                currentlyOwedEther = currentlyOwed.div(decimals).toFixed(2);
+                return _context.abrupt("return", "\u039E" + currentlyOwedEther.toString());
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function currentBalanceOwed() {
+        return _ref.apply(this, arguments);
+      }
+
+      return currentBalanceOwed;
+    }()
   }]);
 
   return LoanDecorator;
