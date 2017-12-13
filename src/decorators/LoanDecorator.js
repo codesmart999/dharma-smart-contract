@@ -12,7 +12,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var decimals = new _bignumber2.default(10 ** 18);
+var decimals = new _bignumber2.default(Math.pow(10, 18));
 
 var LoanDecorator = function () {
   function LoanDecorator(loan) {

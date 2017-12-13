@@ -52,7 +52,7 @@ var RiskBreakdownChart = function () {
 
       var _loop = function _loop(i) {
         var valueInvested = new _bignumber2.default(0);
-        var decimals = new _bignumber2.default(10 ** 18);
+        var decimals = new _bignumber2.default(Math.pow(10, 18));
         var trancheWidth = new _bignumber2.default(0.2);
         var defaultRiskMin = trancheWidth.times(i).plus(0.01).times(decimals);
         var defaultRiskMax = trancheWidth.times(i + 1).times(decimals);

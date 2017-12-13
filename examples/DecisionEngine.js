@@ -27,23 +27,23 @@ class DecisionEngine {
 
             amount: <BigNumber>
       */
-      amount: new this.web3.BigNumber(2*(10**18)),
+      amount: new this.web3.BigNumber(2*(Math.pow(10, 18))),
 
       /*
         Minimum interest rate the investor is willing to accept for the loan.
         NOTE: since Solidity does not support floats, interest rates are
-        expressed as 18 decimal BigNumbers (e.g. 23% interest = 0.23 * (10**18))
+        expressed as 18 decimal BigNumbers (e.g. 23% interest = 0.23 * (Math.pow(10, 18)))
 
             minInterestRate: <BigNumber>
       */
-      minInterestRate: new this.web3.BigNumber(0.23*(10**18))
+      minInterestRate: new this.web3.BigNumber(0.23*(Math.pow(10, 18)))
     }
 
     /*
       Once the auction period is over, if enough bids have been cast, the
       borrower will choose whether or not to accept the given interest rate, and
       the unaccepted bids / remaining portions of accepted bids can be withdrawn
-      by lenders.  For a more extensive description of the loan auctioning 
+      by lenders.  For a more extensive description of the loan auctioning
       process, see ___________
     */
   }

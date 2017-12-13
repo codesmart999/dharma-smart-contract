@@ -5,8 +5,8 @@ class DecisionEngine {
 
   async decide(loan) {
     return {
-      amount: new this.web3.BigNumber(2*(10**18)),
-      minInterestRate: new this.web3.BigNumber(0.23*(10**18))
+      amount: new this.web3.BigNumber(2*(Math.pow(10, 18))),
+      minInterestRate: new this.web3.BigNumber(0.23*(Math.pow(10, 18)))
     }
   }
 }

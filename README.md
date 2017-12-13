@@ -165,16 +165,16 @@ The Dharma CLI ingests ES7 Javascript classes that are required to expose a cons
 
            amount: <BigNumber>
      */
-     amount: new this.web3.BigNumber(2*(10**18)),
+     amount: new this.web3.BigNumber(2*(Math.pow(10, 18))),
 
      /*
        Minimum interest rate the investor is willing to accept for the loan.
        NOTE: since Solidity does not support floats, interest rates are
-       expressed as 18 decimal BigNumbers (e.g. 23% interest = 0.23 * (10**18))
+       expressed as 18 decimal BigNumbers (e.g. 23% interest = 0.23 * (Math.pow(10, 18)))
 
            minInterestRate: <BigNumber>
      */
-     minInterestRate: new this.web3.BigNumber(0.23*(10**18))
+     minInterestRate: new this.web3.BigNumber(0.23*(Math.pow(10, 18)))
    }
 
    /*

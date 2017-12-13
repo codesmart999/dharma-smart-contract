@@ -14,7 +14,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var decimals = new _bignumber2.default(10 ** 18);
+var decimals = new _bignumber2.default(Math.pow(10, 18));
 
 var InvestmentDecorator = function () {
   function InvestmentDecorator(investment) {
